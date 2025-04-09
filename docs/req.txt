@@ -1,0 +1,332 @@
+# Product Requirements Document: MCP Server Generator
+
+## Overview
+The MCP Server Generator is a command-line tool that generates customized MCP servers based on natural language project descriptions. It addresses the challenge of tool/function limits in development environments like Cursor or Roo Code by creating hybrid MCP servers with only the necessary tools across multiple service providers.
+
+## Problem Statement
+Development environments like Cursor and Roo Code impose limits on the number of tools that can be used simultaneously (e.g., Cursor's limit is 40). However, developers often need access to tools from various service providers (GitHub, Slack, etc.). An end user typically only needs a subset of tools from each provider, making the standard approach inefficient.
+
+## Solution
+Our solution enables developers to:
+1. Describe their project in natural language
+2. Based on this description, the system will:
+   - Select appropriate MCP servers from our registry
+   - Choose only the required tools under each MCP server
+   - Generate a new hybrid MCP server containing a targeted mix of tools
+   - Create direct REST API calls to the appropriate provider functions
+
+## Target Users
+- Developers using Cursor, Roo Code, or similar IDEs with tool/function limits
+- Development teams needing optimized access to multiple service providers
+
+## Scope and Constraints
+### In Scope
+- NodeJS MCP server generation
+- STDIO interface (not SSE)
+- CLI-based interaction
+- Support for existing and new projects
+- REST API integrations with common service providers
+
+### Out of Scope for Initial Release
+- Python, Go, or other language support
+- SSE interface
+- GUI/web interface
+- Custom API endpoint creation
+
+## User Experience
+### User Flow
+1. Launch CLI using command: `npx generate-mcp-server`
+2. Select project type:
+   - Existing project (specify folder path)
+   - New project (create and initialize new folder)
+   - If no path is specified, use current working directory
+3. Provide project description:
+   - Enter detailed description directly in terminal
+   - OR specify path to a .txt file containing description
+4. Review and confirm generated server
+5. Option to run the generated server immediately (localhost stdio)
+6. Save and integrate the generated MCP server with mcp_server.json configuration
+
+### CLI Command Options
+```
+npx generate-mcp-server [options]
+
+Options:
+  -p, --project <path>    Path to existing project
+  -d, --description <path>    Path to project description file
+  -o, --output <path>     Output directory for generated files
+  -h, --help              Display help information
+  -v, --verbose           Enable verbose logging
+```
+
+## Technical Requirements
+
+### Core Components
+1. **CLI Interface**
+   - Interactive command-line tool
+   - Input validation and error handling
+   - Clear progress indicators
+
+2. **Project Analyzer**
+   - For existing projects: analyze codebase to understand requirements
+   - Parse package.json for dependencies
+   - Extract relevant information from project structure
+
+3. **LLM Interaction Service**
+   - Prepare context for Gemini API
+   - Process and parse responses
+   - Handle error cases and retry logic
+
+4. **MCP Registry**
+   - JSON database of available MCP servers
+   - Metadata for each server including available tools
+   - Version tracking and compatibility information
+
+5. **Code Generator**
+   - Template-based code generation
+   - Proper formatting and documentation
+   - Integration with existing codebase (if applicable)
+
+### API Integration Requirements
+1. **Service Provider API Registry**
+   - Up-to-date API specifications for supported providers
+   - Authentication requirements
+   - Rate limiting information
+   - Common endpoint documentation
+
+2. **API Client Templates**
+   - Reusable patterns for different API types
+   - Error handling boilerplate
+   - Authentication flow templates
+
+### Data Flow
+1. User inputs project description
+2. Description is analyzed to identify required capabilities
+3. System queries MCP registry to identify relevant servers
+4. System selects necessary tools from each server
+5. Code generation templates are populated with:
+   - Selected tool definitions
+   - API integration code
+   - Authentication requirements
+6. Generated code is formatted and documented
+7. Files are created/updated in target directory
+
+## LLM Integration Specifics
+
+### Context Preparation
+The following will be sent to Gemini API:
+1. Project description (from user input)
+2. Existing index.ts/js (if modifying existing server)
+3. Project structure information:
+   - Directory tree representation
+   - Package.json contents
+   - Main file contents and imports
+4. MCP server registry excerpt (relevant entries only)
+5. System prompt with generation instructions
+
+### System Instructions
+The system prompt will instruct Gemini to:
+1. Analyze the project description
+2. Identify required service providers and tools
+3. Generate a properly structured MCP server index.js file
+4. Include direct REST API calls to appropriate providers
+5. Add comprehensive documentation
+6. Use clear markup to identify files to be created/modified
+
+### Response Parsing
+The response will be parsed to extract:
+1. Files to be created (with paths and content)
+2. Files to be modified (with path, portions to change)
+3. Additional context or explanations
+
+## Technical Implementation Details
+
+### MCP Server Structure
+The generated MCP server will follow this structure:
+```
+mcp-server/
+├── index.js            # Main entry point
+├── providers/          # Provider-specific API clients
+│   ├── github.js       # GitHub API client
+│   ├── slack.js        # Slack API client
+│   └── ...
+├── tools/              # Tool implementations
+│   ├── github_tools.js # GitHub-specific tools
+│   ├── slack_tools.js  # Slack-specific tools
+│   └── ...
+├── utils/              # Utility functions
+│   ├── auth.js         # Authentication helpers
+│   └── api.js          # API request helpers
+└── package.json        # Dependencies and scripts
+```
+
+### Code Organization
+1. **Tool Definitions**
+   - Each tool will be defined with:
+     - Name
+     - Description
+     - Parameters (with validation)
+     - Return type
+     - Provider reference
+
+2. **Provider Clients**
+   - Each provider will have a dedicated client with:
+     - Authentication handling
+     - Base URL configuration
+     - Common headers
+     - Rate limiting management
+
+3. **Main Server File**
+   - Tool registration
+   - Server configuration
+   - Error handling
+   - Logging setup
+
+### Authentication Handling
+- Support for common auth methods:
+  - API keys
+  - OAuth tokens
+  - Basic authentication
+- Secure token storage recommendations
+- Environment variable integration
+
+## Development Roadmap
+
+### Phase 0: Repository Analysis & Design (1 week)
+- Analyze representative samples of MCP server repositories from https://github.com/modelcontextprotocol/servers
+- Create a script to extract directory structures and key files from selected repositories
+- Use LLM (Gemini or Claude) to identify common patterns, best practices, and architectural approaches
+- Document findings on:
+  - Optimal folder structures
+  - Tool organization patterns
+  - Provider API integration approaches
+  - Configuration management
+  - Error handling strategies
+- Create a design document with the "ideal" MCP server structure based on these findings
+- Define templates for the placeholder generation in Phase 1
+
+### Phase 1: CLI Framework (2 weeks)
+- Basic CLI functionality with interactive prompts
+- Project type selection (new or existing)
+- Project description collection (file input or direct text entry)
+- Placeholder MCP server generation that creates:
+  - Basic directory structure
+  - Skeleton files with placeholder functions
+  - mcp_server.json configuration file
+- Option to run the generated server (localhost stdio)
+- Basic documentation
+- No actual LLM integration yet - uses templates instead
+
+### Phase 2: LLM Integration (3 weeks)
+- Integration with Gemini API
+- Context preparation for LLM
+- Parsing and processing LLM responses
+- Support for 3-5 common providers (GitHub, Slack, Jira)
+- Simple code generation based on project description
+- Testing framework for generated code
+
+### Phase 3: Enhancement (3 weeks)
+- Support for 10+ providers
+- Improved code quality in generated servers
+- Better context understanding
+- Provider-specific optimizations
+- Advanced error handling
+
+### Phase 4: Refinement (2 weeks)
+- Advanced customization options
+- Support for complex project structures
+- Performance optimizations
+- User feedback incorporation
+- Extended provider support
+
+## Success Metrics
+1. **User Adoption**
+   - Number of CLI installations
+   - Number of servers generated
+
+2. **Code Quality**
+   - Percentage of generated code used without modification
+   - Error rates in generated code
+
+3. **Efficiency Gains**
+   - Reduction in total tools required
+   - Time saved compared to manual integration
+
+4. **User Satisfaction**
+   - Feedback scores
+   - Feature requests vs. bug reports ratio
+
+## Open Questions and Risks
+
+### Open Questions
+1. How will we handle API versioning across different providers?
+2. How do we ensure proper error handling in generated code?
+3. What is the strategy for keeping API specifications up-to-date?
+4. How will authentication credentials be managed securely?
+
+### Risks
+1. **API Changes**
+   - Risk: Provider APIs may change, breaking generated code
+   - Mitigation: Version tracking and update notifications
+
+2. **LLM Limitations**
+   - Risk: LLM may not always generate optimal code
+   - Mitigation: Templates, post-processing, and validation
+
+3. **Security Concerns**
+   - Risk: Sensitive information in generated code
+   - Mitigation: Security review, credential management guidance
+
+4. **Performance Issues**
+   - Risk: Generated servers may have performance bottlenecks
+   - Mitigation: Performance testing and optimization guidelines
+
+## Implementation Guidelines
+
+### Best Practices for Generated Code
+1. **Modularity**
+   - Separate tools by provider
+   - Use dependency injection for services
+
+2. **Error Handling**
+   - Comprehensive try/catch blocks
+   - Informative error messages
+   - Fallback mechanisms
+
+3. **Documentation**
+   - Comment headers for all functions
+   - Usage examples
+   - Parameter descriptions
+
+4. **Testing**
+   - Generate test placeholders
+   - Validation functions
+   - Mock response examples
+
+### Maintenance Considerations
+1. Regular updates to API specifications
+2. Version compatibility tracking
+3. Deprecation handling
+4. Migration guidance for users
+
+## Appendix
+
+### Key Technologies
+1. Node.js
+2. Commander.js (for CLI)
+3. Gemini API
+4. Axios (for HTTP requests)
+5. Inquirer.js (for interactive prompts)
+
+### Reference Materials
+1. MCP server specification
+2. REST API best practices
+3. OAuth implementation guide
+4. Rate limiting strategies
+
+### Glossary
+- **MCP**: Machine Conversation Protocol
+- **Tool**: A function exposed through an MCP server
+- **Provider**: A service that exposes APIs (e.g., GitHub, Slack)
+- **REST API**: Representational State Transfer Application Programming Interface
+- **CLI**: Command Line Interface
