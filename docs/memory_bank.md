@@ -25,9 +25,9 @@ A detailed architecture document is available at `docs/architecture.md`.
   - src/utils/
 - Template directories have been created
 - Data registry structure has been established
+- Git repository initialized and pushed to GitHub: https://github.com/couchrishi/mcp-generator-cli
 
 ## Next Steps
-- Initialize git repository
 - Implement core functionality for each component
 - Set up testing framework
 - Implement CLI command handling
