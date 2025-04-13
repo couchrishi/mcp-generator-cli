@@ -1,99 +1,21 @@
-# MCP Server Generator CLI
+# MCP Server Generator Project
 
-A command-line tool for generating customized MCP servers based on natural language descriptions.
+This repository contains two main components:
 
-## Overview
+## Documentation
 
-The MCP Server Generator CLI addresses the challenge of tool/function limits in development environments like Cursor or Roo Code by creating hybrid MCP servers with only the necessary tools across multiple service providers.
+The `docs` directory at the root level contains:
+- `memory_bank.md` - Project context and history
+- `architecture.md` - Comprehensive architecture design
 
-## Installation
+These documents serve as a single source of truth for both components.
 
-```bash
-npm install -g mcp-generator-cli
-```
+## MCP Generator
 
-Or use it directly with npx:
+The `mcp-generator` directory contains a Node.js implementation of the MCP Server Generator CLI tool. It generates customized MCP (Model Context Protocol) servers based on natural language project descriptions.
 
-```bash
-npx generate-mcp-server [options]
-```
+## MCP Search
 
-## Usage
+The `mcp-search` directory contains Python tools for creating a semantic search layer for MCP servers. It includes scripts for crawling documentation and implementing semantic search functionality.
 
-```bash
-npx generate-mcp-server [options]
-
-Options:
-  -p, --project <path>    Path to existing project
-  -d, --description <path>    Path to project description file
-  -o, --output <path>     Output directory for generated files
-  -h, --help              Display help information
-  -v, --verbose           Enable verbose logging
-```
-
-### Interactive Mode
-
-If you run the command without options, it will start in interactive mode and prompt you for:
-
-1. Project type selection (new or existing)
-2. Project path
-3. Project description (direct input or file path)
-4. Output directory
-
-### Examples
-
-Generate an MCP server for an existing project:
-
-```bash
-npx generate-mcp-server --project ./my-project --description ./description.txt --output ./mcp-server
-```
-
-Generate an MCP server with direct description input:
-
-```bash
-npx generate-mcp-server --project ./my-project --output ./mcp-server
-```
-
-## Features
-
-- Generate customized MCP servers based on natural language descriptions
-- Support for existing and new projects
-- Interactive command-line interface
-- Integration with multiple service providers (GitHub, Slack, Jira, etc.)
-- Optimized tool selection based on project requirements
-
-## Development
-
-### Prerequisites
-
-- Node.js 14.x or higher
-- npm 6.x or higher
-
-### Setup
-
-1. Clone the repository
-2. Install dependencies:
-
-```bash
-npm install
-```
-
-3. Run the CLI:
-
-```bash
-npm start
-```
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## License
-
-MIT
+See the README.md files in each directory for more detailed instructions.

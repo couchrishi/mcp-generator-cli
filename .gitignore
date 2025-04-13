@@ -22,3 +22,8 @@ out/
 *.swp
 *.swo
 .DS_Store
+
+# Virtual Environments
+.mcp-cli/
+venv/
+.venv/

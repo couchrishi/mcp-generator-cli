@@ -1,0 +1,15 @@
+# Web crawling and content extraction
+requests>=2.28.0
+beautifulsoup4>=4.11.0
+markdown>=3.4.0
+
+# Semantic search
+sentence-transformers>=2.2.0
+numpy>=1.22.0
+scikit-learn>=1.0.0
+
+# Utilities
+pathlib>=1.0.0
+
+# Google Cloud Vertex AI Search
+google-cloud-discoveryengine>=0.10.0

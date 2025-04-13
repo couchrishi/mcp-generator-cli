@@ -1,0 +1,288 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "indexable": true,
+      "dynamicFacetable": false,
+      "searchable": true,
+      "retrievable": true
+    },
+    "repo_url": {
+      "type": "string",
+      "indexable": true,
+      "dynamicFacetable": false,
+      "searchable": true,
+      "retrievable": true
+    },
+    "type": {
+      "type": "string",
+      "indexable": true,
+      "dynamicFacetable": true,
+      "searchable": true,
+      "retrievable": true
+    },
+    "stars": {
+      "type": "number",
+      "indexable": true,
+      "dynamicFacetable": true,
+      "searchable": false,
+      "retrievable": true
+    },
+    "forks": {
+      "type": "number",
+      "indexable": true,
+      "dynamicFacetable": true,
+      "searchable": false,
+      "retrievable": true
+    },
+    "language_stack": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "package_manager": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "dependencies_file": {
+      "type": "string",
+      "indexable": true,
+      "dynamicFacetable": false,
+      "searchable": true,
+      "retrievable": true
+    },
+    "has_dockerfile": {
+      "type": "boolean",
+      "indexable": true,
+      "dynamicFacetable": true,
+      "searchable": false,
+      "retrievable": true
+    },
+    "has_docs": {
+      "type": "boolean",
+      "indexable": true,
+      "dynamicFacetable": true,
+      "searchable": false,
+      "retrievable": true
+    },
+    "has_readme": {
+      "type": "boolean",
+      "indexable": true,
+      "dynamicFacetable": true,
+      "searchable": false,
+      "retrievable": true
+    },
+    "has_examples": {
+      "type": "boolean",
+      "indexable": true,
+      "dynamicFacetable": true,
+      "searchable": false,
+      "retrievable": true
+    },
+    "has_tests": {
+      "type": "boolean",
+      "indexable": true,
+      "dynamicFacetable": true,
+      "searchable": false,
+      "retrievable": true
+    },
+    "base_docker_image": {
+      "type": "string",
+      "indexable": true,
+      "dynamicFacetable": false,
+      "searchable": true,
+      "retrievable": true
+    },
+    "server_description": {
+      "type": "string",
+      "indexable": true,
+      "dynamicFacetable": false,
+      "searchable": true,
+      "retrievable": true
+    },
+    "tools_exposed": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "mcp_sec_score": {
+      "type": "number",
+      "indexable": true,
+      "dynamicFacetable": true,
+      "searchable": false,
+      "retrievable": true
+    },
+    "mcp_sec_risk": {
+      "type": "string",
+      "indexable": true,
+      "dynamicFacetable": true,
+      "searchable": true,
+      "retrievable": true
+    },
+    "mcp_sec_top_findings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "mcp_sec_top_recommendations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "mcp_sec_tool_poisoning_risk": {
+      "type": "string",
+      "indexable": true,
+      "dynamicFacetable": true,
+      "searchable": true,
+      "retrievable": true
+    },
+    "mcp_sec_input_validation_risk": {
+      "type": "string",
+      "indexable": true,
+      "dynamicFacetable": true,
+      "searchable": true,
+      "retrievable": true
+    },
+    "mcp_sec_authentication_risk": {
+      "type": "string",
+      "indexable": true,
+      "dynamicFacetable": true,
+      "searchable": true,
+      "retrievable": true
+    },
+    "mcp_sec_data_exfiltration_risk": {
+      "type": "string",
+      "indexable": true,
+      "dynamicFacetable": true,
+      "searchable": true,
+      "retrievable": true
+    },
+    "mcp_sec_dependency_security_risk": {
+      "type": "string",
+      "indexable": true,
+      "dynamicFacetable": true,
+      "searchable": true,
+      "retrievable": true
+    },
+    "api_sec_score": {
+      "type": "number",
+      "indexable": true,
+      "dynamicFacetable": true,
+      "searchable": false,
+      "retrievable": true
+    },
+    "api_sec_auth_score": {
+      "type": "number",
+      "indexable": true,
+      "dynamicFacetable": false,
+      "searchable": false,
+      "retrievable": true
+    },
+    "api_sec_rate_limit_score": {
+      "type": "number",
+      "indexable": true,
+      "dynamicFacetable": false,
+      "searchable": false,
+      "retrievable": true
+    },
+    "api_sec_input_validation_score": {
+      "type": "number",
+      "indexable": true,
+      "dynamicFacetable": false,
+      "searchable": false,
+      "retrievable": true
+    },
+    "api_sec_error_handling_score": {
+      "type": "number",
+      "indexable": true,
+      "dynamicFacetable": false,
+      "searchable": false,
+      "retrievable": true
+    },
+    "api_sec_https_tls_score": {
+      "type": "number",
+      "indexable": true,
+      "dynamicFacetable": false,
+      "searchable": false,
+      "retrievable": true
+    },
+    "cont_sec_base_image_name": {
+      "type": "string",
+      "indexable": true,
+      "dynamicFacetable": false,
+      "searchable": true,
+      "retrievable": true
+    },
+    "cont_sec_base_image_provenance": {
+      "type": "string",
+      "indexable": true,
+      "dynamicFacetable": true,
+      "searchable": true,
+      "retrievable": true
+    },
+    "cont_sec_base_image_tag_type": {
+      "type": "string",
+      "indexable": true,
+      "dynamicFacetable": true,
+      "searchable": true,
+      "retrievable": true
+    },
+    "cont_sec_base_image_freshness": {
+      "type": "string",
+      "indexable": true,
+      "dynamicFacetable": true,
+      "searchable": true,
+      "retrievable": true
+    },
+    "cont_sec_base_image_age_days": {
+      "type": "number",
+      "indexable": true,
+      "dynamicFacetable": true,
+      "searchable": false,
+      "retrievable": true
+    },
+    "cont_sec_runs_as_root": {
+      "type": "boolean",
+      "indexable": true,
+      "dynamicFacetable": true,
+      "searchable": false,
+      "retrievable": true
+    },
+    "cont_sec_vuln_critical": {
+      "type": "number",
+      "indexable": true,
+      "dynamicFacetable": true,
+      "searchable": false,
+      "retrievable": true
+    },
+    "cont_sec_vuln_high": {
+      "type": "number",
+      "indexable": true,
+      "dynamicFacetable": true,
+      "searchable": false,
+      "retrievable": true
+    },
+    "cont_sec_vuln_total": {
+      "type": "number",
+      "indexable": true,
+      "dynamicFacetable": true,
+      "searchable": false,
+      "retrievable": true
+    },
+    "cont_sec_vuln_fixable": {
+      "type": "number",
+      "indexable": true,
+      "dynamicFacetable": true,
+      "searchable": false,
+      "retrievable": true
+    }
+  }
+}
